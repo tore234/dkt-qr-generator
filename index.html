@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Nombre y tema -->
+    <title>DKT QR Generator ⚡</title>
+    <meta name="description" content="Generador de códigos QR con estilo oscuro y metálico. Hecho por DKT Devs 🤘" />
+    <meta name="theme-color" content="#0b0b0c" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png" />
+
+    <!-- Fuente metalera -->
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Black+Ops+One&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos base -->
+    <style>
+      html, body {
+        background: radial-gradient(circle at 30% 30%, #0b0b0c, #1a1a1a 80%);
+        color: #e4e4e7;
+        font-family: "Metal Mania", system-ui, sans-serif;
+        min-height: 100%;
+      }
+
+      ::selection {
+        background: #b91c1c;
+        color: #fff;
+      }
+
+      /* Animación de fondo: sutil “brillo” metálico */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 10% 10%, rgba(255,0,120,0.05), transparent 60%),
+                    radial-gradient(circle at 90% 90%, rgba(140,0,255,0.05), transparent 60%);
+        z-index: -1;
+        animation: glowShift 12s ease-in-out infinite alternate;
+      }
+
+      @keyframes glowShift {
+        0% { opacity: 0.3; transform: scale(1); }
+        100% { opacity: 0.7; transform: scale(1.05); }
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col items-center justify-center">
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      // Registro del Service Worker para PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('⚙️ SW activo →', reg.scope))
+            .catch(err => console.error('💀 Error registrando SW:', err));
+        });
+      }
+    </script>
+  </body>
+</html>
